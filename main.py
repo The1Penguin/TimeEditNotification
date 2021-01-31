@@ -15,15 +15,22 @@ with requests.Session() as s:
     cr = csv.reader(decoded_content.splitlines(), delimiter=',')
     my_list = list(cr)
 
-a=int(time.strftime("%H"))
-b=int(time.strftime("%M"))
+if time.strftime("%Y-%m-%d") == my_list[4][0]:
+    a=int(time.strftime("%H"))
+    b=int(time.strftime("%M"))
+    c = int(my_list[4][1][0:2])
+    d = (int(my_list[4][1][3:5])-15)
+    e = int(my_list[4][3][0:2])
+    f = int(my_list[4][3][3:5])
+    if d < 0:
+        c = c - 1
+    d = d % 60
 
-c = int(my_list[4][1][0:2])
-d = (int(my_list[4][1][3:5])-15)
-if d < 0:
-    c = c - 1
-d = d % 60
 
-if c-a <= 0 and d-b <=0:
-    cmd = 'notify-send -u normal "' + my_list[4][4] + ' börjar snart"'
-    os.system(cmd)
+    timeNow = a*60+b
+    timeLesson = c*60+d
+    timeDone = e*60+f
+    
+    if timeLesson - timeNow < 0 and timeNow - timeDone < 0:
+        cmd = 'notify-send -u normal "' + my_list[4][4] + ' börjar snart"'
+        os.system(cmd)
