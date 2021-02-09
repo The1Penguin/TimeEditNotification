@@ -8,9 +8,7 @@ url="https://cloud.timeedit.net/chalmers/web/public/ri1Yf3ygZ05ZZfQ1X75v5Yn75Z45
 while True:
     with requests.Session() as s:
         download = s.get(url)
-
         decoded_content = download.content.decode('utf-8')
-
         cr = csv.reader(decoded_content.splitlines(), delimiter=',')
         my_list = list(cr)
 
